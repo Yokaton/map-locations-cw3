@@ -2,345 +2,595 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Карта локаций | Поиск по переходам + маршруты</title>
     <style>
-        * {
-            user-select: none;
-            box-sizing: border-box;
-        }
+    /* =====================================================
+    ПЕРЕМЕННЫЕ ТЕМ (СВЕТЛАЯ / ТЁМНАЯ)
+    ===================================================== */
+    :root {
+        /* Тёмная тема (по умолчанию) */
+        --bg-primary: #0a0f1e;
+        --bg-secondary: #1a2538;
+        --bg-panel: #0f1724;
+        --bg-card: #0f1724;
+        --text-primary: #e2e8f0;
+        --text-secondary: #bbd4f0;
+        --text-muted: #88aadd;
+        --accent: #e94560;
+        --accent-hover: #e06c4e;
+        --cell-bg: #2d3e50;
+        --cell-text: #bbd4f0;
+        --border-color: #2d3e50;
+        --shadow: rgba(0,0,0,0.5);
+        
+        /* Для карточек локаций */
+        --card-border-hover: #4a6fa5;
+        --card-selected-bg: #1a2030;
+        --card-title-border: #2d3e50;
+        --card-grid-bg: #1a2538;
+        --card-cell-bg: #2d3e50;
+        --card-cell-text: #556688;
+        
+        /* Для элементов маршрута */
+        --step-number-bg: #e94560;
+        --step-number-shadow: rgba(0,0,0,0.3);
+        --route-info-bg: #1e2a3a;
+        --route-info-text: #27ae60;
+        --arrow-color: #27ae60;
+        
+        /* Для переходов */
+        --transition-bg: #4a6fa5;
+        --self-loop-bg: #9b59b6;
+        --self-loop-shadow: #9b59b6;
+        --in-route-bg: #27ae60;
+        
+        /* Для описаний */
+        --desc-bg: #1e2a3a;
+        --desc-text: #aabbcc;
+        --desc-title: #e94560;
+        
+        /* Для бейджей */
+        --badge-bg: #e94560;
+        --dev-badge-bg: #9b59b6;
+        --warning-border: #ffaa00;
+        --warning-text: #ffaa66;
+    }
+
+    [data-theme="light"] {
+        /* Светлая тема */
+        --bg-primary: #f0f4f8;
+        --bg-secondary: #ffffff;
+        --bg-panel: #ffffff;
+        --bg-card: #e8eef4;
+        --text-primary: #1a2538;
+        --text-secondary: #4a5568;
+        --text-muted: #64748b;
+        --accent: #e94560;
+        --accent-hover: #d64550;
+        --cell-bg: #cbd5e1;
+        --cell-text: #4a5568;
+        --border-color: #cbd5e1;
+        --shadow: rgba(0,0,0,0.1);
+        
+        /* Для карточек локаций */
+        --card-border-hover: #4a6fa5;
+        --card-selected-bg: #e0e8f0;
+        --card-title-border: #cbd5e1;
+        --card-grid-bg: #e8eef4;
+        --card-cell-bg: #cbd5e1;
+        --card-cell-text: #64748b;
+        
+        /* Для элементов маршрута */
+        --step-number-bg: #e94560;
+        --step-number-shadow: rgba(0,0,0,0.2);
+        --route-info-bg: #e8eef4;
+        --route-info-text: #27ae60;
+        --arrow-color: #27ae60;
+        
+        /* Для переходов */
+        --transition-bg: #4a6fa5;
+        --self-loop-bg: #9b59b6;
+        --self-loop-shadow: #9b59b6;
+        --in-route-bg: #27ae60;
+        
+        /* Для описаний */
+        --desc-bg: #e8eef4;
+        --desc-text: #4a5568;
+        --desc-title: #e94560;
+        
+        /* Для бейджей */
+        --badge-bg: #e94560;
+        --dev-badge-bg: #9b59b6;
+        --warning-border: #ffaa00;
+        --warning-text: #ff8800;
+    }
+
+    * {
+        user-select: none;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: var(--bg-primary);
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        color: var(--text-primary);
+        transition: background 0.3s, color 0.3s;
+    }
+
+    .main-container {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .map-section {
+        background: var(--bg-secondary);
+        border-radius: 28px;
+        padding: 20px;
+        box-shadow: 0 15px 30px var(--shadow);
+        text-align: center;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(10, 58px);
+        grid-template-rows: repeat(6, 87px);
+        gap: 3px;
+        background: var(--bg-panel);
+        padding: 10px;
+        border-radius: 20px;
+        margin: 0 auto;
+        width: fit-content;
+    }
+
+    .cell {
+        background: var(--cell-bg);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: bold;
+        color: var(--cell-text);
+        cursor: pointer;
+        transition: 0.08s linear;
+        flex-direction: column;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 3px var(--shadow);
+    }
+
+    .cell.selected {
+        background: var(--accent);
+        color: white;
+        box-shadow: 0 0 0 2px #ffb347;
+        transform: scale(0.96);
+    }
+
+    .panel {
+        background: var(--bg-panel);
+        border-radius: 28px;
+        padding: 20px;
+        width: 360px;
+        color: var(--text-primary);
+        box-shadow: 0 15px 30px var(--shadow);
+    }
+
+    button {
+        background: var(--bg-secondary);
+        border: none;
+        color: var(--text-primary);
+        padding: 10px 16px;
+        margin: 6px 4px;
+        border-radius: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        font-size: 14px;
+        transition: 0.1s;
+        border: 1px solid var(--border-color);
+    }
+
+    button:hover {
+        background: var(--accent-hover);
+        color: white;
+        transform: scale(0.97);
+    }
+
+    .location-name {
+        background: var(--bg-card);
+        padding: 12px;
+        border-radius: 24px;
+        margin: 15px 0;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        border-left: 5px solid var(--accent);
+        color: var(--text-primary);
+    }
+
+    .location-multiple {
+        background: var(--desc-bg);
+        padding: 12px;
+        border-radius: 24px;
+        margin: 15px 0;
+        text-align: center;
+        font-size: 16px;
+        border-left: 5px solid var(--warning-border);
+        color: var(--text-primary);
+    }
+
+    .location-multiple span {
+        font-size: 14px;
+        color: var(--warning-text);
+    }
+
+    select {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 40px;
+        background: var(--bg-card);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        font-size: 14px;
+    }
+
+    .route-result {
+        background: rgba(0,0,0,0.33);
+        padding: 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        margin-top: 15px;
+        font-family: monospace;
+        word-break: break-word;
+        color: var(--text-secondary);
+    }
+
+    [data-theme="light"] .route-result {
+        background: rgba(0,0,0,0.1);
+    }
+
+    hr {
+        border-color: var(--border-color);
+        margin: 15px 0;
+    }
+
+    .badge {
+        background: var(--badge-bg);
+        display: inline-block;
+        padding: 2px 12px;
+        border-radius: 30px;
+        font-size: 11px;
+        color: white;
+    }
+
+    h3 {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+        color: var(--text-primary);
+    }
+
+    .coord-note {
+        font-size: 10px;
+        text-align: center;
+        margin-top: 10px;
+        color: var(--text-muted);
+    }
+
+    /* =====================================================
+    СЕКЦИЯ МАРШРУТА / ВСЕХ ЛОКАЦИЙ (СНИЗУ)
+    ===================================================== */
+    .bottom-section {
+        background: var(--bg-secondary);
+        border-radius: 28px;
+        padding: 20px;
+        box-shadow: 0 15px 30px var(--shadow);
+        width: 100%;
+        max-width: 1400px;
+        margin-top: 20px;
+        display: none;
+    }
+
+    .bottom-section.active {
+        display: block;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .section-title h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--text-primary);
+    }
+
+    .locations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .location-card {
+        background: var(--bg-card);
+        border-radius: 20px;
+        padding: 15px;
+        border: 2px solid var(--border-color);
+        transition: 0.2s;
+        cursor: pointer;
+        position: relative;
+        color: var(--text-primary);
+    }
+
+    .location-card:hover {
+        border-color: var(--card-border-hover);
+        transform: translateY(-2px);
+    }
+
+    .location-card.selected {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.4);
+        background: var(--card-selected-bg);
+    }
+
+    .location-card .step-number {
+        position: absolute;
+        top: -10px;
+        left: 15px;
+        background: var(--step-number-bg);
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 2px 5px var(--step-number-shadow);
+    }
+
+    .location-card-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--card-title-border);
+        margin-top: 10px;
+    }
+
+    .location-card-desc {
+        font-size: 11px;
+        color: var(--text-muted);
+        text-align: center;
+        margin-bottom: 10px;
+        min-height: 30px;
+    }
+
+    .location-card-grid {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        gap: 1px;
+        background: var(--card-grid-bg);
+        padding: 5px;
+        border-radius: 10px;
+        aspect-ratio: 10/6;
+    }
+
+    .location-card-cell {
+        background: var(--card-cell-bg);
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 7px;
+        color: var(--card-cell-text);
+    }
+
+    .location-card-cell.has-transition {
+        background: var(--transition-bg);
+        color: white;
+        font-weight: bold;
+    }
+
+    .location-card-cell.self-loop {
+        background: var(--self-loop-bg);
+        color: white;
+        box-shadow: 0 0 5px var(--self-loop-shadow);
+    }
+
+    .location-card-cell.in-route {
+        background: var(--in-route-bg);
+        color: white;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    .legend {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin: 15px 0;
+        flex-wrap: wrap;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: var(--text-muted);
+    }
+
+    .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+    }
+
+    .location-description {
+        background: var(--desc-bg);
+        padding: 15px;
+        border-radius: 20px;
+        margin-top: 15px;
+        font-size: 13px;
+        color: var(--desc-text);
+        line-height: 1.5;
+    }
+
+    .location-description h4 {
+        margin: 0 0 8px 0;
+        color: var(--desc-title);
+        font-size: 14px;
+    }
+
+    .route-info {
+        background: var(--route-info-bg);
+        padding: 12px;
+        border-radius: 15px;
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--route-info-text);
+        text-align: center;
+    }
+
+    .arrow-indicator {
+        font-size: 24px;
+        color: var(--arrow-color);
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .dev-mode-badge {
+        background: var(--dev-badge-bg);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 10px;
+        margin-left: 10px;
+        color: white;
+    }
+
+    .mode-toggle {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .mode-toggle button {
+        width: auto;
+        flex: 1;
+    }
+
+    .mode-toggle button.active {
+        background: var(--accent);
+        color: white;
+    }
+
+    /* =====================================================
+    АДАПТИВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ
+    ===================================================== */
+    @media (max-width: 768px) {
         body {
-            background: #0a0f1e;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            padding: 10px;
+            align-items: flex-start;
         }
         .main-container {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 20px;
+            flex-direction: column;
+            gap: 15px;
         }
-        .map-section {
-            background: #1a2538;
-            border-radius: 28px;
-            padding: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        .map-section, .panel {
+            width: 100%;
+            max-width: 100%;
+            padding: 15px;
+            border-radius: 20px;
         }
         .grid {
-            display: grid;
-            grid-template-columns: repeat(10, 58px);
-            grid-template-rows: repeat(6, 87px);
-            gap: 3px;
-            background: #0f1724;
-            padding: 10px;
-            border-radius: 20px;
+            grid-template-columns: repeat(10, 32px);
+            grid-template-rows: repeat(6, 48px);
+            gap: 2px;
+            padding: 5px;
         }
         .cell {
-            background: #2d3e50;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: bold;
-            color: #bbd4f0;
-            cursor: pointer;
-            transition: 0.08s linear;
-            flex-direction: column;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 3px black;
-        }
-        .cell.selected {
-            background: #e94560;
-            color: white;
-            box-shadow: 0 0 0 2px #ffb347;
-            transform: scale(0.96);
+            font-size: 8px;
+            border-radius: 6px;
         }
         .panel {
-            background: #0f1724;
-            border-radius: 28px;
-            padding: 20px;
-            width: 360px;
-            color: #e2e8f0;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-        }
-        button {
-            background: #2c3e4e;
-            border: none;
-            color: white;
-            padding: 10px 16px;
-            margin: 6px 4px;
-            border-radius: 40px;
-            font-weight: bold;
-            cursor: pointer;
             width: 100%;
-            font-size: 14px;
-            transition: 0.1s;
         }
-        button:hover {
-            background: #e06c4e;
-            transform: scale(0.97);
-        }
-        .location-name {
-            background: #1e2a3a;
-            padding: 12px;
-            border-radius: 24px;
-            margin: 15px 0;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            border-left: 5px solid #e94560;
-        }
-        .location-multiple {
-            background: #1e2a3a;
-            padding: 12px;
-            border-radius: 24px;
-            margin: 15px 0;
-            text-align: center;
+        .location-name, .location-multiple {
             font-size: 16px;
-            border-left: 5px solid #ffaa00;
-        }
-        .location-multiple span {
-            font-size: 14px;
-            color: #ffaa66;
-        }
-        select {
-            width: 100%;
             padding: 10px;
-            margin: 8px 0;
-            border-radius: 40px;
-            background: #1e2a36;
-            color: white;
-            border: none;
-            font-size: 14px;
         }
-        .route-result {
-            background: #00000055;
-            padding: 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-top: 15px;
-            font-family: monospace;
-            word-break: break-word;
-        }
-        hr {
-            border-color: #2d3e50;
-            margin: 15px 0;
-        }
-        .badge {
-            background: #e94560;
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 30px;
-            font-size: 11px;
-        }
-        h3 {
-            margin: 0 0 10px 0;
-            font-size: 18px;
-        }
-        .coord-note {
-            font-size: 10px;
-            text-align: center;
-            margin-top: 10px;
-            color: #88aadd;
-        }
-        
-        /* =====================================================
-           СЕКЦИЯ МАРШРУТА / ВСЕХ ЛОКАЦИЙ (СНИЗУ)
-           ===================================================== */
         .bottom-section {
-            background: #1a2538;
-            border-radius: 28px;
-            padding: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-            width: 100%;
-            max-width: 1400px;
-            margin-top: 20px;
-            display: none;
-        }
-        .bottom-section.active {
-            display: block;
-        }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 15px;
         }
         .locations-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .location-card {
-            background: #0f1724;
-            border-radius: 20px;
-            padding: 15px;
-            border: 2px solid #2d3e50;
-            transition: 0.2s;
-            cursor: pointer;
-            position: relative;
-        }
-        .location-card:hover {
-            border-color: #4a6fa5;
-            transform: translateY(-2px);
-        }
-        .location-card.selected {
-            border-color: #e94560;
-            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.4);
-            background: #1a2030;
-        }
-        .location-card .step-number {
-            position: absolute;
-            top: -10px;
-            left: 15px;
-            background: #e94560;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-        .location-card-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #e2e8f0;
-            text-align: center;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #2d3e50;
-            margin-top: 10px;
-        }
-        .location-card-desc {
-            font-size: 11px;
-            color: #88aadd;
-            text-align: center;
-            margin-bottom: 10px;
-            min-height: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
         .location-card-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            grid-template-rows: repeat(6, 1fr);
-            gap: 1px;
-            background: #1a2538;
-            padding: 5px;
-            border-radius: 10px;
-            aspect-ratio: 10/6;
+            grid-template-rows: repeat(6, 20px);
         }
-        .location-card-cell {
-            background: #2d3e50;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
+        .section-header {
+            flex-direction: column;
+            gap: 10px;
+        }
+        .section-title {
+            position: static;
+            transform: none;
             justify-content: center;
-            font-size: 7px;
-            color: #556688;
+            width: 100%;
         }
-        .location-card-cell.has-transition {
-            background: #4a6fa5;
-            color: white;
-            font-weight: bold;
-        }
-        .location-card-cell.self-loop {
-            background: #9b59b6;
-            color: white;
-            box-shadow: 0 0 5px #9b59b6;
-        }
-        .location-card-cell.in-route {
-            background: #27ae60;
-            color: white;
-            animation: pulse 1.5s infinite;
-        }
-        .location-card-cell.in-route.self-loop {
-            background: #f39c12;
-            box-shadow: 0 0 5px #f39c12;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        #closeBottomBtn {
+            width: 100%;
         }
         .legend {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 15px 0;
-            flex-wrap: wrap;
+            gap: 8px;
         }
         .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 11px;
-            color: #88aadd;
-        }
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-        }
-        .location-description {
-            background: #1e2a3a;
-            padding: 15px;
-            border-radius: 20px;
-            margin-top: 15px;
-            font-size: 13px;
-            color: #aabbcc;
-            line-height: 1.5;
-        }
-        .location-description h4 {
-            margin: 0 0 8px 0;
-            color: #e94560;
-            font-size: 14px;
-        }
-        .route-info {
-            background: #1e2a3a;
-            padding: 12px;
-            border-radius: 15px;
-            margin-top: 10px;
-            font-size: 12px;
-            color: #27ae60;
-            text-align: center;
-        }
-        .arrow-indicator {
-            font-size: 24px;
-            color: #27ae60;
-            text-align: center;
-            margin: 10px 0;
-        }
-        .dev-mode-badge {
-            background: #9b59b6;
-            padding: 4px 12px;
-            border-radius: 20px;
             font-size: 10px;
-            margin-left: 10px;
         }
-        .mode-toggle {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
+    }
+
+    @media (max-width: 375px) {
+        .grid {
+            grid-template-columns: repeat(10, 28px);
+            grid-template-rows: repeat(6, 42px);
         }
-        .mode-toggle button {
-            width: auto;
-            flex: 1;
+        .cell {
+            font-size: 7px;
         }
-        .mode-toggle button.active {
-            background: #e94560;
+        .location-card-grid {
+            grid-template-rows: repeat(6, 18px);
         }
+    }
     </style>
 </head>
 <body>
@@ -353,8 +603,8 @@
         </div>
         <div class="grid" id="grid10x6"></div>
         <div style="display: flex; gap: 8px; margin-top: 15px;">
-            <button id="identifyBtn" style="background:#2b6e4e;">ОПРЕДЕЛИТЬ ЛОКАЦИЮ</button>
-            <button id="clearSelectionsBtn" style="background:#4a2a3a;">ОЧИСТИТЬ</button>
+            <button id="identifyBtn" style="background:#2b6e4e; color: white !important;">ОПРЕДЕЛИТЬ ЛОКАЦИЮ</button>
+            <button id="clearSelectionsBtn" style="background:#4a2a3a; color: white !important;">ОЧИСТИТЬ</button>
         </div>
         <div class="coord-note">Координаты: (ряд : колонка) — ряд 1..6, колонка 1..10</div>
     </div>
@@ -378,25 +628,26 @@
         <select id="routeFromSelect"></select>
         <select id="routeToSelect"></select>
         <button id="findRouteBtn">КРАТЧАЙШИЙ ПУТЬ</button>
-        <div id="routeResult" class="route-result">💡 Выберите две локации</div>
+        <div id="routeResult" class="route-result">Выберите две локации</div>
         
         <hr>
         <div style="display: flex; gap: 8px;">
-            <button id="showRouteBtn" style="background:#2b6e4e; display: none;">ПОКАЗАТЬ МАРШРУТ</button>
-            <button id="devModeBtn" style="background:#6a3a7a;">🔧 РЕЖИМ РАЗРАБОТЧИКА будет удален после теста, обычные игроки не смогут увидеть все локации</button>
+            <button id="showRouteBtn" style="background:#2b6e4e; color: white !important; display: none;">ПОКАЗАТЬ МАРШРУТ</button>
+            <button id="devModeBtn" style="background:#6a3a7a; color: white !important;">🔧 РЕЖИМ РАЗРАБОТЧИКА</button>
         </div>
+            <button id="themeToggle">🌙 ТЕМА</button>
     </div>
 </div>
 
 <!-- Нижняя секция: Маршрут или Все локации -->
 <div class="bottom-section" id="bottomSection">
-    <div class="section-header">
-        <div class="section-title">
-            <h3 id="sectionTitle">МАРШРУТ</h3>
-            <span id="devModeBadge" class="dev-mode-badge" style="display: none;">DEV MODE</span>
-        </div>
-        <button id="closeBottomBtn" style="width: auto; background:#4a2a3a;">✕ ЗАКРЫТЬ</button>
+<div class="section-header">
+    <div class="section-title">
+        <h3 id="sectionTitle">🛤️ МАРШРУТ</h3>
+        <span id="devModeBadge" class="dev-mode-badge" style="display: none;">DEV MODE</span>
     </div>
+        <button id="closeBottomBtn" style="width: auto; background:#4a2a3a; color: white !important;">✕ ЗАКРЫТЬ</button>
+</div>
     
     <div class="legend">
         <div class="legend-item">
@@ -410,10 +661,6 @@
         <div class="legend-item">
             <div class="legend-color" style="background: #27ae60;"></div>
             <span>Маршрут</span>
-        </div>
-        <div class="legend-item">
-            <div class="legend-color" style="background: #f39c12;"></div>
-            <span>Маршрут (петля)</span>
         </div>
     </div>
     
@@ -596,7 +843,7 @@
             ],
             description: "",
             transitionTargets: {
-                "1_1": "Тупик", "1_3": "Тупик", "1_5": "Горы 18", "1_7": "Тупик", "1_9": "Тупик",
+                "1_1": "Тупик", "1_3": "Тупик", "1_5": "Тупик", "1_7": "Горы 18", "1_9": "Тупик",
                 "2_1": "Тупик", "2_3": "Тупик", "2_5": "Тупик", "2_7": "Тупик", "2_9": "Тупик",
                 "3_1": "Тупик", "3_3": "Горные кланы", "3_5": "Тупик", "3_7": "Тупик", "3_9": "Тупик",
                 "4_1": "Тупик", "4_3": "Тупик", "4_5": "Тупик", "4_7": "Тупик", "4_9": "Тупик",
@@ -928,9 +1175,6 @@
                     
                     if (isInRoute) {
                         cell.classList.add('in-route');
-                        if (isSelfLoop) {
-                            cell.classList.add('self-loop');
-                        }
                     } else {
                         cell.classList.add('has-transition');
                         if (isSelfLoop) {
@@ -947,32 +1191,24 @@
         
         // Клик по карточке
         card.onclick = () => {
-            selectedLocation = locName;
-            currentRoute = null;
-            routeTransitions = {};
-            document.getElementById('routeResult').innerHTML = '💡 Выберите две локации';
-            document.getElementById('routeInfoDisplay').style.display = 'none';
-            document.getElementById('showRouteBtn').style.display = 'none';
+        selectedLocation = locName;
             
-            document.querySelectorAll('.location-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
+        document.querySelectorAll('.location-card').forEach(c => c.classList.remove('selected'));
+       card.classList.add('selected');
             
-            document.getElementById('locationResult').innerHTML = `${locName}`;
-            document.getElementById('locationResult').className = "location-name";
-            document.getElementById('locationDescText').innerHTML = data.description;
-            document.getElementById('locationDescription').style.display = 'block';
+       document.getElementById('locationResult').innerHTML = `${locName}`;
+       document.getElementById('locationResult').className = "location-name";
+       document.getElementById('locationDescText').innerHTML = data.description;
+       document.getElementById('locationDescription').style.display = 'block';
             
-            selectedCells.clear();
-            data.transitions.forEach(t => selectedCells.add(t));
-            renderMap();
-            
-            // Перерисовываем карточки для обновления выделения
-            if (currentRoute && !devMode) {
-                renderRouteLocations();
-            } else if (devMode) {
-                renderAllLocations();
-            }
-        };
+        selectedCells.clear();
+        data.transitions.forEach(t => selectedCells.add(t));
+        renderMap();
+    
+        if (currentRoute) {
+            renderRouteLocations();
+        }
+    };
         
         return card;
     }
@@ -1027,7 +1263,7 @@
             devMode = true;
             currentRoute = null;
             routeTransitions = {};
-            document.getElementById('routeResult').innerHTML = '💡 Выберите две локации';
+            document.getElementById('routeResult').innerHTML = 'Выберите две локации';
             renderAllLocations();
         }
     }
@@ -1095,7 +1331,27 @@
             document.getElementById('showRouteBtn').style.display = currentRoute ? 'block' : 'none';
         };
     }
+
+    // ============================================================
+    // ПЕРЕКЛЮЧЕНИЕ ТЕМЫ
+    // ============================================================
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
     
+    // Загрузка сохранённой темы
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? '🌙 Тема' : '☀️ Тема';
+    
+    // Переключение темы
+    themeToggle.onclick = () => {
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        themeToggle.textContent = next === 'dark' ? '🌙 Тема' : '☀️ Тема';
+    };
+
     init();
 </script>
 </body>
