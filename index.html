@@ -10,100 +10,105 @@
     ===================================================== */
     :root {
         /* Тёмная тема (по умолчанию) */
-        --bg-primary: #0a0f1e;
-        --bg-secondary: #1a2538;
-        --bg-panel: #0f1724;
-        --bg-card: #0f1724;
+        --bg-primary: #0B0F1D;
+        --bg-secondary: #1A2538;
+        --bg-panel: #1A2538;
+        --bg-card: #0B0F1D;
         --text-primary: #e2e8f0;
-        --text-secondary: #bbd4f0;
-        --text-muted: #88aadd;
-        --accent: #e94560;
-        --accent-hover: #e06c4e;
-        --cell-bg: #2d3e50;
-        --cell-text: #bbd4f0;
+        --text-secondary: #e4f0ff;
+        --text-muted: #87a1c2;
+        --accent: #00B8FF;
+        --accent-hover: #00B8FF;
+        --cell-bg: #2E3E50;
+        --cell-text: #e4f0ff;
         --border-color: #2d3e50;
         --shadow: rgba(0,0,0,0.5);
         
         /* Для карточек локаций */
-        --card-border-hover: #4a6fa5;
-        --card-selected-bg: #1a2030;
+        --card-border-hover: #ffffff;
         --card-title-border: #2d3e50;
-        --card-grid-bg: #1a2538;
-        --card-cell-bg: #2d3e50;
-        --card-cell-text: #556688;
+        --card-cell-bg: #2E3E50;
         
         /* Для элементов маршрута */
-        --step-number-bg: #e94560;
+        --step-number-bg: #00B8FF;
         --step-number-shadow: rgba(0,0,0,0.3);
         --route-info-bg: #1e2a3a;
-        --route-info-text: #27ae60;
-        --arrow-color: #27ae60;
+        --route-info-text: #87a1c2;
         
         /* Для переходов */
-        --transition-bg: #4a6fa5;
-        --self-loop-bg: #9b59b6;
-        --self-loop-shadow: #9b59b6;
-        --in-route-bg: #27ae60;
+        --transition-bg: #5e86a1;
+        --self-loop-bg: #00B8FF;
+        --in-route-bg: #00D56A;
+        --legend-transition-bg: #5e86a1;
+        --legend-self-loop-bg: #00B8FF;
+        --legend-route-bg: #00D56A;
         
         /* Для описаний */
-        --desc-bg: #1e2a3a;
-        --desc-text: #aabbcc;
-        --desc-title: #e94560;
+        --desc-bg: #2E3E50;
+        --desc-text: #E7EDF4;
+        --desc-title: #00B8FF;
         
         /* Для бейджей */
-        --badge-bg: #e94560;
-        --dev-badge-bg: #9b59b6;
+        --badge-bg: #1A2538;
+        --dev-badge-bg: #0B0F1D;
         --warning-border: #ffaa00;
         --warning-text: #ffaa66;
+
+        /* Для кнопок */
+        --btn-identify-bg: #ffffff;
+        --btn-identify-text: #0B0F1D;
+        --btn-clear-bg: #395B74;
+        --btn-clear-text: #ffffff;
+        --btn-show-route-bg: #ffffff;
+        --btn-show-route-text: #0B0F1D;
+        --btn-dev-bg: #0B0F1D;
+        --btn-dev-text: #ffffff;
+        --btn-close-bg: #395B74;
+        --btn-close-text: #ffffff;
+        --btn-default-bg: var(--bg-secondary);
+        --btn-default-text: var(--text-primary);
+        --btn-default-hover-bg: var(--accent-hover);
+        --btn-default-hover-text: #ffffff;        
     }
 
     [data-theme="light"] {
         /* Светлая тема */
-        --bg-primary: #f0f4f8;
+        --bg-primary: #B1BECF;
         --bg-secondary: #ffffff;
         --bg-panel: #ffffff;
-        --bg-card: #e8eef4;
-        --text-primary: #1a2538;
-        --text-secondary: #4a5568;
-        --text-muted: #64748b;
-        --accent: #e94560;
-        --accent-hover: #d64550;
-        --cell-bg: #cbd5e1;
-        --cell-text: #4a5568;
-        --border-color: #cbd5e1;
-        --shadow: rgba(0,0,0,0.1);
-        
-        /* Для карточек локаций */
-        --card-border-hover: #4a6fa5;
-        --card-selected-bg: #e0e8f0;
-        --card-title-border: #cbd5e1;
-        --card-grid-bg: #e8eef4;
-        --card-cell-bg: #cbd5e1;
-        --card-cell-text: #64748b;
-        
-        /* Для элементов маршрута */
-        --step-number-bg: #e94560;
-        --step-number-shadow: rgba(0,0,0,0.2);
-        --route-info-bg: #e8eef4;
-        --route-info-text: #27ae60;
-        --arrow-color: #27ae60;
-        
-        /* Для переходов */
-        --transition-bg: #4a6fa5;
-        --self-loop-bg: #9b59b6;
-        --self-loop-shadow: #9b59b6;
-        --in-route-bg: #27ae60;
+        --bg-card: #f0f5fa;
+        --text-primary: #2d3e50;
+        --text-secondary: #2d3e50;
+        --cell-bg: #B1BECF;
+        --cell-text: #395B74;
+        --border-color: #7f97a8;  
+        --shadow: rgba(56, 76, 94, 0.5);
         
         /* Для описаний */
-        --desc-bg: #e8eef4;
-        --desc-text: #4a5568;
-        --desc-title: #e94560;
+        --desc-bg: #E7EDF4;
+        --desc-text: #2E3E50;
+        --desc-title: #00B8FF;
+
+        /* Для карточек локаций */
+        --card-border-hover: #6dd6ff;  
+        --card-cell-bg: #c7d1df;
         
         /* Для бейджей */
-        --badge-bg: #e94560;
-        --dev-badge-bg: #9b59b6;
-        --warning-border: #ffaa00;
-        --warning-text: #ff8800;
+        --badge-bg: #0B0F1D;
+
+        /* Для кнопок */
+        --btn-identify-bg: #395B74;
+        --btn-identify-text: #ffffff;
+        --btn-clear-bg: #B1BECF;
+        --btn-clear-text: #395B74;
+        --btn-show-route-bg: #00B8FF;
+        --btn-show-route-text: #ffffff;
+        --btn-close-bg: #0B0F1D;
+        --btn-close-text: #ffffff;
+        --btn-default-bg: var(--bg-secondary);
+        --btn-default-text: var(--text-primary);
+        --btn-default-hover-bg: var(--accent-hover);
+        --btn-default-hover-text: #ffffff;        
     }
 
     * {
@@ -170,7 +175,7 @@
     .cell.selected {
         background: var(--accent);
         color: white;
-        box-shadow: 0 0 0 2px #ffb347;
+        box-shadow: 0 0 0 2px #88ddff;
         transform: scale(0.96);
     }
 
@@ -349,7 +354,7 @@
 
     .location-card.selected {
         border-color: var(--accent);
-        box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.4);
+        box-shadow: 0 0 0 3px rgba(62, 178, 255, 0.4);
         background: var(--card-selected-bg);
     }
 
@@ -472,7 +477,6 @@
     }
 
     .route-info {
-        background: var(--route-info-bg);
         padding: 12px;
         border-radius: 15px;
         margin-top: 10px;
@@ -481,35 +485,12 @@
         text-align: center;
     }
 
-    .arrow-indicator {
-        font-size: 24px;
-        color: var(--arrow-color);
-        text-align: center;
-        margin: 10px 0;
-    }
-
     .dev-mode-badge {
         background: var(--dev-badge-bg);
         padding: 4px 12px;
         border-radius: 20px;
         font-size: 10px;
         margin-left: 10px;
-        color: white;
-    }
-
-    .mode-toggle {
-        display: flex;
-        gap: 10px;
-        margin-top: 15px;
-    }
-
-    .mode-toggle button {
-        width: auto;
-        flex: 1;
-    }
-
-    .mode-toggle button.active {
-        background: var(--accent);
         color: white;
     }
 
@@ -591,6 +572,48 @@
             grid-template-rows: repeat(6, 18px);
         }
     }
+    /* === Все кнопки через переменные === */
+    #identifyBtn {
+        background: var(--btn-identify-bg) !important;
+        color: var(--btn-identify-text) !important;
+    }
+
+    #clearSelectionsBtn {
+        background: var(--btn-clear-bg) !important;
+        color: var(--btn-clear-text) !important;
+    }
+
+    #showRouteBtn {
+        background: var(--btn-show-route-bg) !important;
+        color: var(--btn-show-route-text) !important;
+    }
+
+    #devModeBtn {
+        background: var(--btn-dev-bg) !important;
+        color: var(--btn-dev-text) !important;
+    }
+
+    #closeBottomBtn {
+        background: var(--btn-close-bg) !important;
+        color: var(--btn-close-text) !important;
+    }
+
+    button:hover {
+        background: var(--btn-default-hover-bg) !important;
+        color: var(--btn-default-hover-text) !important;
+    }
+    .legend-transition {
+    background: var(--legend-transition-bg) !important;
+    }
+
+    .legend-self-loop {
+        background: var(--legend-self-loop-bg) !important;
+    }
+
+    .legend-route {
+        background: var(--legend-route-bg) !important;
+    }
+    
     </style>
 </head>
 <body>
@@ -603,8 +626,8 @@
         </div>
         <div class="grid" id="grid10x6"></div>
         <div style="display: flex; gap: 8px; margin-top: 15px;">
-            <button id="identifyBtn" style="background:#2b6e4e; color: white !important;">ОПРЕДЕЛИТЬ ЛОКАЦИЮ</button>
-            <button id="clearSelectionsBtn" style="background:#4a2a3a; color: white !important;">ОЧИСТИТЬ</button>
+           <button id="identifyBtn">ОПРЕДЕЛИТЬ ЛОКАЦИЮ</button>
+            <button id="clearSelectionsBtn">ОЧИСТИТЬ</button>
         </div>
         <div class="coord-note">Координаты: (ряд : колонка) — ряд 1..6, колонка 1..10</div>
     </div>
@@ -612,9 +635,9 @@
     <!-- Секция 2: Панель результатов и маршрутов -->
     <div class="panel">
         <div style="text-align: center;">
-            <h3>📍 ВАША ЛОКАЦИЯ</h3>
+            <h3>ВАША ЛОКАЦИЯ</h3>
             <div id="locationResult" class="location-name">❓ Не определена</div>
-            <p style="font-size: 12px; opacity:0.7;">✅ Отметьте переходы на карте → нажмите "ОПРЕДЕЛИТЬ"</p>
+            <div class="coord-note">Отметьте переходы на карте → нажмите "ОПРЕДЕЛИТЬ"</div>
         </div>
         
         <!-- Описание выбранной локации -->
@@ -624,7 +647,7 @@
         </div>
         
         <hr>
-        <h3>🗺️ МАРШРУТЫ</h3>
+        <h3>МАРШРУТЫ</h3>
         <select id="routeFromSelect"></select>
         <select id="routeToSelect"></select>
         <button id="findRouteBtn">КРАТЧАЙШИЙ ПУТЬ</button>
@@ -632,8 +655,8 @@
         
         <hr>
         <div style="display: flex; gap: 8px;">
-            <button id="showRouteBtn" style="background:#2b6e4e; color: white !important; display: none;">ПОКАЗАТЬ МАРШРУТ</button>
-            <button id="devModeBtn" style="background:#6a3a7a; color: white !important;">🔧 РЕЖИМ РАЗРАБОТЧИКА</button>
+            <button id="showRouteBtn" style="display: none;">ПОКАЗАТЬ МАРШРУТ</button>
+            <button id="devModeBtn">🔧 РЕЖИМ РАЗРАБОТЧИКА</button>
         </div>
             <button id="themeToggle">🌙 ТЕМА</button>
     </div>
@@ -643,23 +666,23 @@
 <div class="bottom-section" id="bottomSection">
 <div class="section-header">
     <div class="section-title">
-        <h3 id="sectionTitle">🛤️ МАРШРУТ</h3>
+        <h3 id="sectionTitle">МАРШРУТ</h3>
         <span id="devModeBadge" class="dev-mode-badge" style="display: none;">DEV MODE</span>
     </div>
-        <button id="closeBottomBtn" style="width: auto; background:#4a2a3a; color: white !important;">✕ ЗАКРЫТЬ</button>
+       <button id="closeBottomBtn" style="width: auto;"> ✕ ЗАКРЫТЬ</button>
 </div>
     
     <div class="legend">
         <div class="legend-item">
-            <div class="legend-color" style="background: #4a6fa5;"></div>
+            <div class="legend-color legend-transition"></div>
             <span>Переход</span>
         </div>
         <div class="legend-item">
-            <div class="legend-color" style="background: #9b59b6;"></div>
+            <div class="legend-color legend-self-loop"></div>
             <span>Петля (в себя)</span>
         </div>
         <div class="legend-item">
-            <div class="legend-color" style="background: #27ae60;"></div>
+            <div class="legend-color legend-route"></div>
             <span>Маршрут</span>
         </div>
     </div>
@@ -682,6 +705,21 @@
                 "3_2": "Обрушенная вершина",
                 "3_3": "Горы 16",
                 "6_10": "Ледопад"
+            }
+        },
+        "Воющие коридоры": {
+            transitions: ["1_2", "4_7"],
+            description: "",
+            transitionTargets: {
+                "1_2": "Горы 39",
+                "4_7": "Коридоры 1",
+            }
+        },
+        "Предгорья": { //изменить расположение переходов
+            transitions: ["1_1"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 46"
             }
         },
         "Развилка": {
@@ -892,7 +930,281 @@
             transitionTargets: {
                 "6_10": "Горы 8"
             }
-        }                                        
+        }, //Начало маршрута Предгорий
+                "Горы 24": {
+            transitions: ["1_1", "1_10", "3_5", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 24",
+                "1_10": "Горы 24",
+                "3_5": "Горы 25",
+                "6_1": "Развилка",
+                "6_10": "Горы 24"
+            }
+        },
+                "Горы 25": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 24",
+                "1_10": "Горы 25",
+                "6_1": "Горы 26",
+                "6_10": "Горы 32"
+            }
+        },
+                "Горы 26": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Тупик",
+                "1_10": "Горы 25",
+                "6_1": "Горы 27",
+                "6_10": "Тупик"
+            }
+        },
+                "Горы 27": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 26",
+                "1_10": "Горы 27",
+                "6_1": "Горы 28",
+                "6_10": "Горы 30"
+            }
+        },
+                "Горы 28": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 27",
+                "1_10": "Горы 29",
+                "6_1": "Горы 28",
+                "6_10": "Горы 38"
+            }
+        },
+                "Горы 29": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 30",
+                "1_10": "Горы 30",
+                "6_1": "Горы 28",
+                "6_10": "Тупик"
+            }
+        },
+                "Горы 30": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 31",
+                "1_10": "Тупик",
+                "6_1": "Горы 29",
+                "6_10": "Горы 50"
+            }
+        },
+                "Горы 31": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Тупик",
+                "1_10": "Горы 32",
+                "6_1": "Горы 31",
+                "6_10": "Горы 30"
+            }
+        },
+                "Горы 32": {
+            transitions: ["1_1", "1_9", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 0",
+                "1_9": "Горы 0",
+                "1_10": "Горы 33",
+                "6_1": "Горы 31",
+                "6_10": "Горы 34"
+            }
+        },
+                "Горы 33": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 33",
+                "1_10": "Горы 33",
+                "6_1": "Горы 32",
+                "6_10": "Горы 34"
+            }
+        },
+                "Горы 34": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 33",
+                "1_10": "Горы 35",
+                "6_1": "Горы 32",
+                "6_10": "Горы 34"
+            }
+        },
+                "Горы 35": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Тупик",
+                "1_10": "Тупик",
+                "6_1": "Горы 34",
+                "6_10": "Горы 36"
+            }
+        },
+                "Горы 36": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 35",
+                "1_10": "Горы 37",
+                "6_1": "Тупик",
+                "6_10": "Горы 39"
+            }
+        },
+                "Горы 37": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 37",
+                "1_10": "Горы 38",
+                "6_1": "Горы 36",
+                "6_10": "Горы 38"
+            }
+        },
+                "Горы 38": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 37",
+                "1_10": "Горы 37",
+                "6_1": "Горы 39",
+                "6_10": "Тупик"
+            }
+        },
+                "Горы 39": {
+            transitions: ["1_1", "1_10", "6_1", "6_8", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 39",
+                "1_10": "Горы 38",
+                "6_1": "Горы 40",
+                "6_8": "Воющие Коридоры",
+                "6_10": "Горы 44"
+            }
+        },
+                "Горы 40": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 40",
+                "1_10": "Горы 39",
+                "6_1": "Горы 41",
+                "6_10": "Горы 43"
+            }
+        },
+                "Горы 41": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 41",
+                "1_10": "Горы 41",
+                "6_1": "Горы 42",
+                "6_10": "Горы 41"
+            }
+        },
+                "Горы 42": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 41",
+                "1_10": "Горы 42",
+                "6_1": "Горы 42",
+                "6_10": "Горы 43"
+            }
+        },
+                "Горы 43": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 43",
+                "1_10": "Горы 43",
+                "6_1": "Горы 42",
+                "6_10": "Горы 45"
+            }
+        },
+                "Горы 44": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 44",
+                "1_10": "Горы 39",
+                "6_1": "Горы 44",
+                "6_10": "Горы 45"
+            }
+        },
+                "Горы 45": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 43",
+                "1_10": "Горы 44",
+                "6_1": "Горы 46",
+                "6_10": "Тупик"
+            }
+        },
+                "Горы 46": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 47",
+                "1_10": "Горы 45",
+                "6_1": "Горы 48",
+                "6_10": "Предгорья"
+            }
+        },
+                "Горы 47": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 48",
+                "1_10": "Горы 46",
+                "6_1": "Горы 49",
+                "6_10": "Горы 47"
+            }
+        },
+                "Горы 48": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 50",
+                "1_10": "Горы 48",
+                "6_1": "Горы 48",
+                "6_10": "Горы 46"
+            }
+        },
+                "Горы 49": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Тупик",
+                "1_10": "Горы 50",
+                "6_1": "Горы 49",
+                "6_10": "Горы 47"
+            }
+        },
+                "Горы 50": {
+            transitions: ["1_1", "1_10", "6_1", "6_10"],
+            description: "",
+            transitionTargets: {
+                "1_1": "Горы 48",
+                "1_10": "Горы 48",
+                "6_1": "Горы 49",
+                "6_10": "Горы 48"
+            }
+        }
+                                                
     };
     
     // ГРАФ для маршрутов
@@ -936,7 +1248,45 @@
     "Горы 20": ["Горы 21"],
     "Горы 21": ["Горы 22"],
     "Горы 22": ["Горы 23"],
-    "Горы 23": ["Горы 8"]
+    "Горы 23": ["Горы 8"],
+
+   // === Горы 24-32 (верхний кластер) ===
+    "Горы 24": ["Горы 25", "Развилка"],
+    "Горы 25": ["Горы 24", "Горы 26", "Горы 32"],
+    "Горы 26": ["Горы 25", "Горы 27"],
+    "Горы 27": ["Горы 26", "Горы 28", "Горы 30"],
+    "Горы 28": ["Горы 27", "Горы 29"],
+    "Горы 29": ["Горы 28", "Горы 30"],
+    "Горы 30": ["Горы 29", "Горы 31", "Горы 50"],
+    "Горы 31": ["Горы 30", "Горы 32"],
+    "Горы 32": ["Горы 31", "Горы 33", "Горы 34", "Горы 0"],
+    
+    // === Горы 33-39 (воющие коридоры) ===
+    "Горы 33": ["Горы 32", "Горы 34"],
+    "Горы 34": ["Горы 32", "Горы 33", "Горы 35"],
+    "Горы 35": ["Горы 34", "Горы 36"],
+    "Горы 36": ["Горы 35", "Горы 37", "Горы 39"],
+    "Горы 37": ["Горы 36", "Горы 38"],
+    "Горы 38": ["Горы 37", "Горы 39"],
+    "Горы 39": ["Горы 38", "Горы 40", "Горы 44", "Воющие коридоры"],
+    "Воющие коридоры": ["Горы 39"],
+    
+    // === Горы 40-46 (центральный кластер)===
+    "Горы 40": ["Горы 39", "Горы 41", "Горы 43"],
+    "Горы 41": ["Горы 42"],
+    "Горы 42": ["Горы 41", "Горы 43"],
+    "Горы 43": ["Горы 42", "Горы 45"],
+    "Горы 44": ["Горы 39", "Горы 45"],
+    "Горы 45": ["Горы 43", "Горы 44", "Горы 46"],
+    "Горы 46": ["Горы 45", "Горы 47", "Горы 48", "Предгорья"],
+    "Предгорья": ["Горы 46"],
+
+    // === Горы 47-50 (нижний кластер)===
+    "Горы 47": ["Горы 46", "Горы 48", "Горы 49"],
+    "Горы 48": ["Горы 46", "Горы 50"],
+    "Горы 49": ["Горы 47", "Горы 50"],
+    "Горы 50": ["Горы 48", "Горы 49"],
+
     };
     
     // ============================================================
@@ -1022,7 +1372,7 @@
             matchingLocations.forEach(name => {
                 listHtml += `<span>📍 ${name}</span><br>`;
             });
-            listHtml += "<span style='font-size:10px'>➡️ У этих локаций одинаковые переходы</span>";
+            listHtml += "<span style='font-size:10px'>У этих локаций одинаковые переходы</span>";
             resultDiv.innerHTML = listHtml;
             resultDiv.className = "location-multiple";
             descDiv.style.display = 'none';
@@ -1285,7 +1635,6 @@
     // 8. ЗАПУСК
     // ============================================================
     function init() {
-        // ✅ Валидация базы данных при запуске
         let validCount = 0;
         let invalidCount = 0;
         
@@ -1299,8 +1648,6 @@
         }
         
         console.log(`📊 База данных загружена: ${validCount} локаций OK, ${invalidCount} ошибок`);
-        
-        // ✅ Инициализация
         renderMap();
         populateSelects();
         
