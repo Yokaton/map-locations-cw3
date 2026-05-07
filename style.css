@@ -1,0 +1,632 @@
+:root {
+    /* Тёмная тема (по умолчанию) */
+    --bg-primary: #0B0F1D;
+    --bg-secondary: #1A2538;
+    --bg-panel: #1A2538;
+    --bg-card: #0B0F1D;
+    --text-primary: #e2e8f0;
+    --text-secondary: #e4f0ff;
+    --text-muted: #87a1c2;
+    --accent: #00B8FF;
+    --accent-hover: #00B8FF;
+    --cell-bg: #2E3E50;
+    --cell-text: #e4f0ff;
+    --border-color: #2d3e50;
+    --shadow: rgba(0, 0, 0, 0.5);
+
+    /* Для карточек локаций */
+    --card-border-hover: #ffffff;
+    --card-title-border: #2d3e50;
+    --card-cell-bg: #2E3E50;
+
+    /* Для элементов маршрута */
+    --step-number-bg: #00B8FF;
+    --step-number-shadow: rgba(0, 0, 0, 0.3);
+    --route-info-bg: #1e2a3a;
+    --route-info-text: #87a1c2;
+
+    /* Для переходов */
+    --transition-bg: #5e86a1;
+    --self-loop-bg: #00B8FF;
+    --in-route-bg: #00D56A;
+    --legend-transition-bg: #5e86a1;
+    --legend-self-loop-bg: #00B8FF;
+    --legend-route-bg: #00D56A;
+
+    /* Для описаний */
+    --desc-bg: #2E3E50;
+    --desc-text: #E7EDF4;
+    --desc-title: #00B8FF;
+
+    /* Для бейджей */
+    --badge-bg: #1A2538;
+    --dev-badge-bg: #0B0F1D;
+    --warning-border: #ffaa00;
+    --warning-text: #ffaa66;
+
+    /* Для кнопок */
+    --btn-identify-bg: #ffffff;
+    --btn-identify-text: #0B0F1D;
+    --btn-clear-bg: #395B74;
+    --btn-clear-text: #ffffff;
+    --btn-show-route-bg: #ffffff;
+    --btn-show-route-text: #0B0F1D;
+    --btn-dev-bg: #0B0F1D;
+    --btn-dev-text: #ffffff;
+    --btn-close-bg: #395B74;
+    --btn-close-text: #ffffff;
+    --btn-default-bg: var(--bg-secondary);
+    --btn-default-text: var(--text-primary);
+    --btn-default-hover-bg: var(--accent-hover);
+    --btn-default-hover-text: #ffffff;
+}
+
+[data-theme="light"] {
+    /* Светлая тема */
+    --bg-primary: #B1BECF;
+    --bg-secondary: #ffffff;
+    --bg-panel: #ffffff;
+    --bg-card: #f0f5fa;
+    --text-primary: #2d3e50;
+    --text-secondary: #2d3e50;
+    --cell-bg: #B1BECF;
+    --cell-text: #395B74;
+    --border-color: #7f97a8;
+    --shadow: rgba(56, 76, 94, 0.5);
+
+    /* Для описаний */
+    --desc-bg: #E7EDF4;
+    --desc-text: #2E3E50;
+    --desc-title: #00B8FF;
+
+    /* Для карточек локаций */
+    --card-border-hover: #6dd6ff;
+    --card-cell-bg: #c7d1df;
+
+    /* Для бейджей */
+    --badge-bg: #0B0F1D;
+
+    /* Для кнопок */
+    --btn-identify-bg: #395B74;
+    --btn-identify-text: #ffffff;
+    --btn-clear-bg: #B1BECF;
+    --btn-clear-text: #395B74;
+    --btn-show-route-bg: #00B8FF;
+    --btn-show-route-text: #ffffff;
+    --btn-close-bg: #0B0F1D;
+    --btn-close-text: #ffffff;
+    --btn-default-bg: var(--bg-secondary);
+    --btn-default-text: var(--text-primary);
+    --btn-default-hover-bg: var(--accent-hover);
+    --btn-default-hover-text: #ffffff;
+}
+
+* {
+    user-select: none;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-primary);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    color: var(--text-primary);
+    transition: background 0.3s, color 0.3s;
+}
+
+.main-container {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.map-section {
+    background: var(--bg-secondary);
+    border-radius: 28px;
+    padding: 20px;
+    box-shadow: 0 15px 30px var(--shadow);
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 58px);
+    grid-template-rows: repeat(6, 87px);
+    gap: 3px;
+    background: var(--bg-panel);
+    padding: 10px;
+    border-radius: 20px;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.cell {
+    background: var(--cell-bg);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--cell-text);
+    cursor: pointer;
+    transition: 0.08s linear;
+    flex-direction: column;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 1px 3px var(--shadow);
+}
+
+.cell.selected {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 0 0 2px #88ddff;
+    transform: scale(0.96);
+}
+
+.panel {
+    background: var(--bg-panel);
+    border-radius: 28px;
+    padding: 20px;
+    width: 360px;
+    color: var(--text-primary);
+    box-shadow: 0 15px 30px var(--shadow);
+}
+
+button {
+    background: var(--bg-secondary);
+    border: none;
+    color: var(--text-primary);
+    padding: 10px 16px;
+    margin: 6px 4px;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 14px;
+    transition: 0.1s;
+    border: 1px solid var(--border-color);
+}
+
+button:hover {
+    background: var(--accent-hover);
+    color: white;
+    transform: scale(0.97);
+}
+
+.location-name {
+    background: var(--bg-card);
+    padding: 12px;
+    border-radius: 24px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border-left: 5px solid var(--accent);
+    color: var(--text-primary);
+}
+
+.location-multiple {
+    background: var(--desc-bg);
+    padding: 12px;
+    border-radius: 24px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 16px;
+    border-left: 5px solid var(--warning-border);
+    color: var(--text-primary);
+}
+
+.location-multiple span {
+    font-size: 14px;
+    color: var(--warning-text);
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 40px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    font-size: 14px;
+}
+
+.route-result {
+    background: rgba(0, 0, 0, 0.33);
+    padding: 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-top: 15px;
+    font-family: monospace;
+    word-break: break-word;
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .route-result {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+hr {
+    border-color: var(--border-color);
+    margin: 15px 0;
+}
+
+.badge {
+    background: var(--badge-bg);
+    display: inline-block;
+    padding: 2px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    color: white;
+}
+
+h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+.coord-note {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 10px;
+    color: var(--text-muted);
+}
+
+/* =====================================================
+    СЕКЦИЯ МАРШРУТА / ВСЕХ ЛОКАЦИЙ (СНИЗУ)
+    ===================================================== */
+.bottom-section {
+    background: var(--bg-secondary);
+    border-radius: 28px;
+    padding: 20px;
+    box-shadow: 0 15px 30px var(--shadow);
+    width: 100%;
+    max-width: 1400px;
+    margin-top: 20px;
+    display: none;
+}
+
+.bottom-section.active {
+    display: block;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.section-title h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.locations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.location-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    transition: 0.2s;
+    cursor: pointer;
+    position: relative;
+    color: var(--text-primary);
+}
+
+.location-card:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-2px);
+}
+
+.location-card.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(62, 178, 255, 0.4);
+    background: var(--card-selected-bg);
+}
+
+.location-card .step-number {
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    background: var(--step-number-bg);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px var(--step-number-shadow);
+}
+
+.location-card-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--card-title-border);
+    margin-top: 10px;
+}
+
+.location-card-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 10px;
+    min-height: 30px;
+}
+
+.location-card-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--card-grid-bg);
+    padding: 5px;
+    border-radius: 10px;
+    aspect-ratio: 10/6;
+}
+
+.location-card-cell {
+    background: var(--card-cell-bg);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    color: var(--card-cell-text);
+}
+
+.location-card-cell.has-transition {
+    background: var(--transition-bg);
+    color: white;
+    font-weight: bold;
+}
+
+.location-card-cell.self-loop {
+    background: var(--self-loop-bg);
+    color: white;
+    box-shadow: 0 0 5px var(--self-loop-shadow);
+}
+
+.location-card-cell.in-route {
+    background: var(--in-route-bg);
+    color: white;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.legend {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.location-description {
+    background: var(--desc-bg);
+    padding: 15px;
+    border-radius: 20px;
+    margin-top: 15px;
+    font-size: 13px;
+    color: var(--desc-text);
+    line-height: 1.5;
+}
+
+.location-description h4 {
+    margin: 0 0 8px 0;
+    color: var(--desc-title);
+    font-size: 14px;
+}
+
+.route-info {
+    padding: 12px;
+    border-radius: 15px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--route-info-text);
+    text-align: center;
+}
+
+.dev-mode-badge {
+    background: var(--dev-badge-bg);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    margin-left: 10px;
+    color: white;
+}
+
+/* =====================================================
+    АДАПТИВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ
+    ===================================================== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .main-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .map-section,
+    .panel {
+        width: 100%;
+        max-width: 100%;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(10, 32px);
+        grid-template-rows: repeat(6, 48px);
+        gap: 2px;
+        padding: 5px;
+    }
+
+    .cell {
+        font-size: 8px;
+        border-radius: 6px;
+    }
+
+    .panel {
+        width: 100%;
+    }
+
+    .location-name,
+    .location-multiple {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .bottom-section {
+        padding: 15px;
+    }
+
+    .locations-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .location-card-grid {
+        grid-template-rows: repeat(6, 20px);
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .section-title {
+        position: static;
+        transform: none;
+        justify-content: center;
+        width: 100%;
+    }
+
+    #closeBottomBtn {
+        width: 100%;
+    }
+
+    .legend {
+        gap: 8px;
+    }
+
+    .legend-item {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 375px) {
+    .grid {
+        grid-template-columns: repeat(10, 28px);
+        grid-template-rows: repeat(6, 42px);
+    }
+
+    .cell {
+        font-size: 7px;
+    }
+
+    .location-card-grid {
+        grid-template-rows: repeat(6, 18px);
+    }
+}
+
+/* === Все кнопки через переменные === */
+#identifyBtn {
+    background: var(--btn-identify-bg) !important;
+    color: var(--btn-identify-text) !important;
+}
+
+#clearSelectionsBtn {
+    background: var(--btn-clear-bg) !important;
+    color: var(--btn-clear-text) !important;
+}
+
+#showRouteBtn {
+    background: var(--btn-show-route-bg) !important;
+    color: var(--btn-show-route-text) !important;
+}
+
+#devModeBtn {
+    background: var(--btn-dev-bg) !important;
+    color: var(--btn-dev-text) !important;
+}
+
+#closeBottomBtn {
+    background: var(--btn-close-bg) !important;
+    color: var(--btn-close-text) !important;
+}
+
+button:hover {
+    background: var(--btn-default-hover-bg) !important;
+    color: var(--btn-default-hover-text) !important;
+}
+
+.legend-transition {
+    background: var(--legend-transition-bg) !important;
+}
+
+.legend-self-loop {
+    background: var(--legend-self-loop-bg) !important;
+}
+
+.legend-route {
+    background: var(--legend-route-bg) !important;
+}
